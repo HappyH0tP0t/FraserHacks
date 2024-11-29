@@ -5,7 +5,7 @@ import math
 
 #Set up
 pygame.init()
-pygame.display.set_caption("It's Mathin' Time!")
+pygame.display.set_caption("It's MATHin' Time!")
 screen = pygame.display.set_mode((960, 540))
 clock = pygame.time.Clock()
 running = True
@@ -75,6 +75,8 @@ BLACK = (0,0,0)
 
 #Variables
 
+credits = False
+
 #play button dimensions
 play_button_x = 315
 play_button_y = 245
@@ -123,6 +125,10 @@ intro_page = intro_page.convert()
 edging_page = pygame.image.load('ending-screen.jpg')
 edging_page = pygame.transform.scale(edging_page,(960, 540))
 edging_page = edging_page.convert()
+
+credits_image = pygame.image.load('credits!.jpg')
+#credits = pygame.transform.scale(credits,(960, 540))
+credits_image = credits_image.convert()
 
 # counters
 goal_number = random.randint(0, 100)
@@ -182,6 +188,12 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
+            if scene == 1:
+                if mouse_x >= play_button_x and mouse_x <= play_button_x+play_button_width and mouse_y >= play_button_y+125 and mouse_y <= play_button_y+play_button_length+125 and credits == False:
+                    credits = True
+                else:
+                    credits = False
+
             for target in target_list:
                 if (target.rect.collidepoint((mouse_x, mouse_y))):
                     print(str(target.operatorType)+ str(target.operatorNumber))
@@ -249,6 +261,9 @@ while running:
         screen.blit(intro_page, (0,0))
 
         difficulty_list.draw(screen)
+
+        if credits == True:
+            screen.blit(credits_image, (150,150))
 
 
     elif scene == 2:
