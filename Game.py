@@ -174,8 +174,9 @@ while running:
                 if (target.rect.collidepoint(mouse_x, mouse_y)):
                     if scene == 1:
                         scene = 2
-                        # sprite.update(color, BLACK)
-
+                        
+                    elif scene == 3:
+                        scene = 1
                     else:
                         scene = 1
 
@@ -219,12 +220,18 @@ while running:
             goal_number = random.randint(0, 100)
             game_time = stopwatch
             stopwatch = 0
+            scene = 3
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         screen.blit(my_font.render("time: " + str(round(stopwatch)), False, (0, 0, 0)), (0, 0))
         screen.blit(my_font.render("current number: " + str(current_number), False, (0, 0, 0)), (0, 30))
         screen.blit(my_font.render("goal number: " + str(goal_number), False, (0, 0, 0)), (0, 60))
+
+    elif scene == 3:
+        screen.fill(BLACK)
+        
+
 
     pygame.display.flip()
     clock.tick(60)
