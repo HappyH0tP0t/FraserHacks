@@ -19,6 +19,15 @@ lastFrameTime = time.time()
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
+#The target things
+targets = [
+    {
+        "positionX": 0,
+        "positionY": 0,
+        "text": "5"
+    }
+]
+
 #Color
 red = (255,0,0)
 green = (0,255,0)
@@ -36,7 +45,7 @@ while running:
     lastFrameMouseX, lastFrameMouseY = mouseX, mouseY
     
     # debbug
-    print(deltaTime)
+    # print(deltaTime)
 
     # keep an eye out for quitting
     for event in pygame.event.get():
