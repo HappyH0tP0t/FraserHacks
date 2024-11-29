@@ -6,17 +6,17 @@ pygame.init()
 screen = pygame.display.set_mode((960, 540))
 clock = pygame.time.Clock()
 running = True
+pygame.font.init() 
 
 ##Main
-pygame.font.init() # you have to call this at the start, 
-                   # if you want to use this module.
-my_font = pygame.font.SysFont('Comic Sans MS', 30)
 
 
 #Variables
 lastFrameMouseX, lastFrameMouseY = pygame.mouse.get_pos()
 mouseX, mouseY = pygame.mouse.get_pos()
 lastFrameTime = time.time()
+## Text
+my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
 #Color
