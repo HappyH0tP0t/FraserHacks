@@ -52,6 +52,11 @@ def getBiasedTarget(current, goal):
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
         operators += ["-", "-", "-", "/", "/", "/"]
+    newTarget = BaseTarget(WHITE, 80, 80, operator[random.randint(0,3)], random.randint(1,5))
+
+    # Set a random location for the target sprite
+    newTarget.rect.x = random.randint(100, 800)
+    newTarget.rect.y = random.randint(100, 500)
     return newTarget
     
 
@@ -225,7 +230,7 @@ while running:
     elif scene == 2:
         PlayButton.kill()
         DifficultyButton.kill() 
-        scene_list.remove(Button)
+        scene_list.remove(PlayButton)
         # update screen (do this last)
         screen.fill(WHITE)
 
