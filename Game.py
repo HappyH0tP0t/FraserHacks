@@ -57,12 +57,22 @@ def getBiasedTarget(current, goal):
     # Set a random location for the target sprite
     newTarget.rect.x = random.randint(100, 800)
     newTarget.rect.y = random.randint(100, 450)
+    for sprite in target_list:
+        if pygame.sprite.collide_rect(sprite, newTarget):
+            newTarget.rect.x = random.randint(100, 800)
+            newTarget.rect.y = random.randint(100, 450)
+
     return newTarget
     
 
 ##Main
 
 #Variables
+#play button dimensions
+play_button_x = 315
+play_button_y = 280
+play_button_width = 290
+play_button_length = 140
 
 
 #List
@@ -70,6 +80,16 @@ all_sprites_list = pygame.sprite.Group()
 target_list = pygame.sprite.Group()
 scene_list = pygame.sprite.Group()
 difficulty_list = pygame.sprite.Group()
+
+# counters
+goal_number = random.randint(0, 100)
+current_number = random.randint(0, 100)
+stopwatch = 0
+game_time = 0
+difficulty = "easy"
+
+#scene number
+scene = 1
 
 #Mouse position
 last_frame_mouse_x, last_frame_mouse_y = pygame.mouse.get_pos()
@@ -92,7 +112,6 @@ BLACK = (0,0,0)
 # Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Some Text', False, (0, 0, 0))
-
 #images
 intro_page = pygame.image.load('Start-screen-image.jpg')
 intro_page = pygame.transform.scale(intro_page,(960, 540))
@@ -114,8 +133,8 @@ PlayButton = Block(WHITE, 290,104)
 DifficultyButton = Block(GREEN, 50, 50)
 
 # Set a location for the target sprite
-PlayButton.rect.x = 315
-PlayButton.rect.y = 280
+PlayButton.rect.x = play_button_x
+PlayButton.rect.y = play_button_y
 DifficultyButton.rect.x = 120
 DifficultyButton.rect.y = 480
 
@@ -210,7 +229,7 @@ while running:
 
         #hack button which allows you to instally get to the goal number                
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RCTRL:
+            if event.key == pygame.K_RCTRL and scene == 2:
                 current_number = goal_number
 
     all_sprites_list.update()
@@ -259,7 +278,7 @@ while running:
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        screen.blit(my_font.render("time: " + str(round(stopwatch * 100) / 100), False, (0, 0, 0)), (0, 0))
+        screen.blit(my_font.render("time: " + str(round(stopwatch * 1000) / 1000), False, (0, 0, 0)), (0, 0))
         screen.blit(my_font.render("current number: " + str(current_number), False, (0, 0, 0)), (0, 30))
         screen.blit(my_font.render("goal number: " + str(goal_number), False, (0, 0, 0)), (0, 60))
 
