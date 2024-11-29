@@ -59,9 +59,6 @@ def getBiasedTarget(current, goal):
 ##Main
 
 #Variables
-stopwatch = 0
-game_time = 0
-
 #List
 all_sprites_list = pygame.sprite.Group()
 target_list = pygame.sprite.Group()
@@ -176,8 +173,6 @@ while running:
 
                     else:
                         scene = 1
-        if event.type == pygame.key.get_pressed(K_i):
-            print("works")
 
     all_sprites_list.update()
 
@@ -213,16 +208,13 @@ while running:
             currentNumber = random.randint(0, 100)
             goalNumber = random.randint(0, 100)
             stopwatch = 0
-            game_time = stopwatch
+            print("lol you won")
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         screen.blit(my_font.render("time: " + str(stopwatch), False, (0, 0, 0)), (0, 0))
         screen.blit(my_font.render("current number: " + str(currentNumber), False, (0, 0, 0)), (0, 30))
         screen.blit(my_font.render("goal number: " + str(goalNumber), False, (0, 0, 0)), (0, 60))
-
-    elif scene ==3:
-        pass
 
     pygame.display.flip()
     clock.tick(60)
