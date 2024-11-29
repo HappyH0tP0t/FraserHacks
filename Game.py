@@ -177,12 +177,6 @@ while running:
                     #CREATING NEW TARGET    
                     newTarget = getBiasedTarget(current_number, goal_number)
                     
-                    # Set a random location for the target sprite
-                    newTarget.rect.x = random.randint(100, 800)
-                    newTarget.rect.y = random.randint(100, 500)
-                    for sprite in target_list:
-                        if pygame.sprite.collide_rect(sprite, newTarget):
-                            print("HEY")
                     newTarget = getBiasedTarget(current_number, goal_number)
                     
                     # Add the target sprite to the list of objects
