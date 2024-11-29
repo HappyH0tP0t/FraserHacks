@@ -43,7 +43,7 @@ class BaseTarget(Block):
 # functions
 def getBiasedTarget(current, goal):
     operators = ["+","-","*","/"]
-    direction = math.sign(goal - current)
+    direction = math.copysign(1, goal - current)
     if direction > 0:
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
@@ -160,7 +160,7 @@ while running:
                         currentNumber = int(currentNumber)
                     target.kill()
                     
-                    newTarget = getBiasedTarget()
+                    newTarget = getBiasedTarget(currentNumber, goalNumber)
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
                     target_list.add(newTarget)
