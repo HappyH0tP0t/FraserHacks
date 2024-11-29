@@ -70,12 +70,27 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 
 #Variables
+#play button dimensions
+play_button_x = 305
+play_button_y = 290
+play_button_width = 290
+play_button_length = 140
 
 #List
 all_sprites_list = pygame.sprite.Group()
 target_list = pygame.sprite.Group()
 scene_list = pygame.sprite.Group()
 difficulty_list = pygame.sprite.Group()
+
+# counters
+goal_number = random.randint(0, 100)
+current_number = random.randint(0, 100)
+stopwatch = 0
+game_time = 0
+difficulty = "easy"
+
+#scene number
+scene = 1
 
 #Mouse position
 last_frame_mouse_x, last_frame_mouse_y = pygame.mouse.get_pos()
@@ -85,32 +100,23 @@ last_frame_time = time.time()
 #what the operator
 operator = ["+","-","*","/"]
 
-#scene number
-scene = 1
-
-# Text
+#Images and texts
+#Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Some Text', False, (0, 0, 0))
-
 #images
 intro_page = pygame.image.load('Start-screen-image.jpg')
 intro_page = pygame.transform.scale(intro_page,(960, 540))
 intro_page = intro_page.convert()
 
-# counters
-goal_number = random.randint(0, 100)
-current_number = random.randint(0, 100)
-stopwatch = 0
-game_time = 0
-difficulty = "easy"
-
+#Object creation
 # Create Buttons
-PlayButton = Block(WHITE, 290,140)
+PlayButton = Block(WHITE, play_button_width,play_button_length)
 DifficultyButton = Block(GREEN, 50, 50)
 
 # Set a location for the target sprite
-PlayButton.rect.x = 305
-PlayButton.rect.y = 290
+PlayButton.rect.x = play_button_x
+PlayButton.rect.y = play_button_y
 DifficultyButton.rect.x = 120
 DifficultyButton.rect.y = 480
 
@@ -224,8 +230,7 @@ while running:
 
     elif scene == 2:
         PlayButton.kill()
-        DifficultyButton.kill()
-        difficulty_list.remove(DifficultyButton)
+        DifficultyButton.kill() 
         scene_list.remove(PlayButton)
         # update screen (do this last)
         screen.fill(WHITE)
@@ -256,7 +261,7 @@ while running:
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        screen.blit(my_font.render("time: " + str(round(stopwatch * 1000) / 1000), False, (0, 0, 0)), (0, 0))
+        screen.blit(my_font.render("time: " + str(round(stopwatch)), False, (0, 0, 0)), (0, 0))
         screen.blit(my_font.render("current number: " + str(current_number), False, (0, 0, 0)), (0, 30))
         screen.blit(my_font.render("goal number: " + str(goal_number), False, (0, 0, 0)), (0, 60))
 
