@@ -155,7 +155,7 @@ for i in range(5):
     Target.rect.x = random.randint(100, 800)
     Target.rect.y = random.randint(100, 450)
     for t in target_list:
-        if Target.rect.collidepoint((t.rect.x, t.rect.y)):
+        if pygame.sprite.collide_rect(t, Target):
             Target.rect.x = random.randint(100, 800)
             Target.rect.y = random.randint(100, 450)
 
