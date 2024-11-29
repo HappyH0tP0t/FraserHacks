@@ -225,7 +225,7 @@ while running:
 
     elif scene == 2:
         PlayButton.kill()
-        DifficultyButton.kill() 
+        difficulty_list.remove(DifficultyButton)
         scene_list.remove(PlayButton)
         # update screen (do this last)
         screen.fill(WHITE)
@@ -252,6 +252,7 @@ while running:
             stopwatch = 0
             scene = 3
             scene_list.add(PlayButton)
+            difficulty_list.add(DifficultyButton)
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
