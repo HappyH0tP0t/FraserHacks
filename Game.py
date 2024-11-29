@@ -150,19 +150,23 @@ while running:
                     if target.operatorType == "/":
                         current_number /= target.operatorNumber
                         current_number = int(current_number)
+
                     #REMOVING OLD TARGET
                     target.kill()
+
                     #CREATING NEW TARGET    
                     newTarget = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
+                    
                     # Set a random location for the target sprite
                     newTarget.rect.x = random.randint(100, 800)
                     newTarget.rect.y = random.randint(100, 500)
-                    for t in target_list:
-                        if newTarget.rect.collidepoint((t.rect.x, t.rect.y)):
+                    for sprite in target_list:
+                        if pygame.sprite.collide_rect(sprite, newTarget):
                             print("HEY")
                             newTarget.rect.x = random.randint(100, 800)
                             newTarget.rect.y = random.randint(100, 500)
                     newTarget = getBiasedTarget(current_number, goal_number)
+                    
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
                     target_list.add(newTarget)
@@ -174,6 +178,7 @@ while running:
 
                     else:
                         scene = 1
+
         #hack button which allows you to instally get to the goal number                
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RCTRL:
