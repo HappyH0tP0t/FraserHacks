@@ -21,8 +21,6 @@ class Block(pygame.sprite.Sprite):
         self.image = pygame.Surface([width,height])
         self.image.fill(color)
 
-
- 
         # Fetch the rectangle object that has the dimensions of the image
         # image.
         # Update the position of this object by setting the values
@@ -30,7 +28,6 @@ class Block(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
 ##Main
-
 
 #Variables
 all_sprites_list = pygame.sprite.Group()
