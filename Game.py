@@ -8,11 +8,16 @@ clock = pygame.time.Clock()
 running = True
 
 ##Main
+pygame.font.init() # you have to call this at the start, 
+                   # if you want to use this module.
+my_font = pygame.font.SysFont('Comic Sans MS', 30)
+
 
 #Variables
 lastFrameMouseX, lastFrameMouseY = pygame.mouse.get_pos()
 mouseX, mouseY = pygame.mouse.get_pos()
 lastFrameTime = time.time()
+text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
 #Color
 red = (255,0,0)
@@ -29,7 +34,7 @@ while running:
     mouseX, mouseY = pygame.mouse.get_pos()
     mouseDeltaX, mouseDeltaY = mouseX - lastFrameMouseX, mouseY - lastFrameMouseY
     lastFrameMouseX, lastFrameMouseY = mouseX, mouseY
-
+    
     # debbug
     print(deltaTime)
 
@@ -42,7 +47,8 @@ while running:
     screen.fill((255, 255, 255))
 
     pygame.draw.circle(screen, red, (mouseX, mouseY), 10)
-    
+    screen.blit(text_surface, (mouseX, mouseY))
+
     pygame.display.flip()
     clock.tick(60)
 
