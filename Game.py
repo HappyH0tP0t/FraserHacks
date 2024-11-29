@@ -49,21 +49,13 @@ def getBiasedTarget(current, goal):
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
         operators += ["-", "-", "-", "/", "/", "/"]
-    #CREATING NEW TARGET    
-    newTarget = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
-    # Set a random location for the target sprite
-    newTarget.rect.x = random.randint(100, 800)
-    newTarget.rect.y = random.randint(100, 500)
-    for t in target_list:
-        if Target.rect.collidepoint((t.rect.x, t.rect.y)):
-            Target.rect.x = random.randint(100, 800)
-            Target.rect.y = random.randint(100, 500)
     return newTarget
     
 
 ##Main
 
 #Variables
+
 #List
 all_sprites_list = pygame.sprite.Group()
 target_list = pygame.sprite.Group()
@@ -96,9 +88,10 @@ intro_page = pygame.image.load('Start-screen-image.jpg')
 intro_page = intro_page.convert()
 
 # counters
-goalNumber = random.randint(0, 100)
-currentNumber = random.randint(0, 100)
+goal_number = random.randint(0, 100)
+current_number = random.randint(0, 100)
 stopwatch = 0
+game_time = 0
 
 # This represents a button sprite
 Button = Block(BLACK, 290,140)
@@ -149,18 +142,32 @@ while running:
                 if (target.rect.collidepoint((mouse_x, mouse_y))):
                     print(str(target.operatorType)+ str(target.operatorNumber))
                     if target.operatorType == "+":
-                        currentNumber += target.operatorNumber
+                        current_number += target.operatorNumber
                     if target.operatorType == "-":
-                        currentNumber -= target.operatorNumber
+                        current_number -= target.operatorNumber
                     if target.operatorType == "*":
-                        currentNumber *= target.operatorNumber
+                        current_number *= target.operatorNumber
                     if target.operatorType == "/":
-                        currentNumber /= target.operatorNumber
-                        currentNumber = int(currentNumber)
+                        current_number /= target.operatorNumber
+                        current_number = int(current_number)
                     #REMOVING OLD TARGET
                     target.kill()
+<<<<<<< HEAD
                     
+                    newTarget = getBiasedTarget(current_number, goalNumber)
+=======
+                    #CREATING NEW TARGET    
+                    newTarget = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
+                    # Set a random location for the target sprite
+                    newTarget.rect.x = random.randint(100, 800)
+                    newTarget.rect.y = random.randint(100, 500)
+                    for t in target_list:
+                        if newTarget.rect.collidepoint((t.rect.x, t.rect.y)):
+                            print("HEY")
+                            newTarget.rect.x = random.randint(100, 800)
+                            newTarget.rect.y = random.randint(100, 500)
                     newTarget = getBiasedTarget(currentNumber, goalNumber)
+>>>>>>> 8171717468e2ee2df7d3b27c82ae3d4755c9b3c2
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
                     target_list.add(newTarget)
@@ -172,9 +179,10 @@ while running:
 
                     else:
                         scene = 1
-        if event.type == pygame.KEYDOWN and pygame.K_RIGHTBRACKET:
-            goalNumber = currentNumber
-            print("works")
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RCTRL:
+                current_number = goal_number
+                print("works")
 
     all_sprites_list.update()
 
@@ -206,17 +214,17 @@ while running:
 
         # Increase the timer and check for wins
         stopwatch += delta_time
-        if currentNumber == goalNumber:
-            currentNumber = random.randint(0, 100)
-            goalNumber = random.randint(0, 100)
+        if current_number == goal_number:
+            current_number = random.randint(0, 100)
+            goal_number = random.randint(0, 100)
+            game_time = stopwatch
             stopwatch = 0
-            print("lol you won")
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         screen.blit(my_font.render("time: " + str(round(stopwatch)), False, (0, 0, 0)), (0, 0))
-        screen.blit(my_font.render("current number: " + str(currentNumber), False, (0, 0, 0)), (0, 30))
-        screen.blit(my_font.render("goal number: " + str(goalNumber), False, (0, 0, 0)), (0, 60))
+        screen.blit(my_font.render("current number: " + str(current_number), False, (0, 0, 0)), (0, 30))
+        screen.blit(my_font.render("goal number: " + str(goal_number), False, (0, 0, 0)), (0, 60))
 
     pygame.display.flip()
     clock.tick(60)
