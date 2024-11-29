@@ -5,6 +5,7 @@ import math
 
 #Set up
 pygame.init()
+pygame.display.set_caption("It's Mathin' Time!")
 screen = pygame.display.set_mode((960, 540))
 clock = pygame.time.Clock()
 running = True
