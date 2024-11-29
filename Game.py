@@ -112,7 +112,7 @@ scene = 1
 
 # Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
-text_surface = my_font.render('Some Text', False, (0, 0, 0))
+text_surface = my_font.render('Some Text', False, BLACK)
 #images
 intro_page = pygame.image.load('Start-screen-image.jpg')
 intro_page = pygame.transform.scale(intro_page,(960, 540))
@@ -282,9 +282,9 @@ while running:
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        screen.blit(my_font.render("time: " + str(round(stopwatch * 1000) / 1000), False, (0, 0, 0)), (0, 0))
-        screen.blit(my_font.render("current number: " + str(current_number), False, (0, 0, 0)), (0, 30))
-        screen.blit(my_font.render("goal number: " + str(goal_number), False, (0, 0, 0)), (0, 60))
+        screen.blit(my_font.render("time: " + str(round(stopwatch * 1000) / 1000), False, BLACK), (0, 0))
+        screen.blit(my_font.render("current number: " + str(current_number), False, BLACK), (0, 30))
+        screen.blit(my_font.render("goal number: " + str(goal_number), False, BLACK), (0, 60))
 
     elif scene == 3:
 
