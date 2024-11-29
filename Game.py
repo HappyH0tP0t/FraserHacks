@@ -275,6 +275,7 @@ while running:
             stopwatch = 0
             scene = 3
             scene_list.add(PlayButton)
+            difficulty_list.add(DifficultyButton)
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
