@@ -286,16 +286,21 @@ while running:
         # draw the mouse
         pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
 
-        # Increase the timer and check for wins
+        # Increase the timer
         stopwatch += delta_time
+        #if your current number is the same as the goal_number you win
         if current_number == goal_number:
             current_number = random.randint(0, 100)
             goal_number = random.randint(0, 100)
             game_time = stopwatch
             stopwatch = 0
             scene = 3
+
+            #adding back the playbutton and the difficulty button
             scene_list.add(PlayButton)
             difficulty_list.add(DifficultyButton)
+
+            #rendering the text for the final time
             final_time_text = my_font.render("Your final time is:", False, WHITE)   
             final_time = my_font.render(str(round(game_time,3)), False, WHITE)                
         
@@ -313,7 +318,10 @@ while running:
         #drawing the button
         scene_list.draw(screen)
 
+        #bliting the end screen
         screen.blit(edging_page, (0,0))
+
+        #bliting the final time
         screen.blit(final_time_text, (40,300))
         screen.blit(final_time, (120, 350))
 
