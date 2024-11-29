@@ -52,11 +52,11 @@ def getBiasedTarget(current, goal):
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
         operators += ["-", "-", "-", "/", "/", "/"]
-    newTarget = BaseTarget(WHITE, 80, 80, operator[random.randint(0,3)], random.randint(1,5))
+    newTarget = BaseTarget(WHITE, 75, 75, operators[random.randint(0,len(operators) - 1)], random.randint(1,5))
 
     # Set a random location for the target sprite
     newTarget.rect.x = random.randint(100, 800)
-    newTarget.rect.y = random.randint(100, 500)
+    newTarget.rect.y = random.randint(100, 450)
     return newTarget
     
 
@@ -70,6 +70,7 @@ all_sprites_list = pygame.sprite.Group()
 target_list = pygame.sprite.Group()
 scene_list = pygame.sprite.Group()
 difficulty_list = pygame.sprite.Group()
+
 #Mouse position
 last_frame_mouse_x, last_frame_mouse_y = pygame.mouse.get_pos()
 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -94,6 +95,7 @@ text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
 #images
 intro_page = pygame.image.load('Start-screen-image.jpg')
+intro_page = pygame.transform.scale(intro_page,(960, 540))
 intro_page = intro_page.convert()
 
 # counters
@@ -104,13 +106,13 @@ game_time = 0
 difficulty = "easy"
 
 # Create Buttons
-PlayButton = Block(BLACK, 290,140)
+PlayButton = Block(WHITE, 290,140)
 DifficultyButton = Block(GREEN, 50, 50)
 
 # Set a location for the target sprite
 PlayButton.rect.x = 305
 PlayButton.rect.y = 290
-DifficultyButton.rect.x = 10
+DifficultyButton.rect.x = 120
 DifficultyButton.rect.y = 480
 
 # Add the target sprite to the list of objects
@@ -122,15 +124,15 @@ difficulty_list.add(DifficultyButton)
 #Target sprite set up
 for i in range(5):
     # This represents a target sprite
-    Target = BaseTarget(WHITE, 80, 80, operator[random.randint(0,3)], random.randint(1,5))
+    Target = BaseTarget(WHITE, 75, 75, operator[random.randint(0,3)], random.randint(1,5))
 
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
-    Target.rect.y = random.randint(100, 500)
+    Target.rect.y = random.randint(100, 450)
     for t in target_list:
         if Target.rect.collidepoint((t.rect.x, t.rect.y)):
             Target.rect.x = random.randint(100, 800)
-            Target.rect.y = random.randint(100, 500)
+            Target.rect.y = random.randint(100, 450)
 
     # Add the target sprite to the list of objects
     all_sprites_list.add(Target)
@@ -196,7 +198,7 @@ while running:
                         difficulty = "easy"
                     target.kill()
                     DifficultyButton = Block(GREEN if difficulty == "easy" else RED, 50, 50)
-                    DifficultyButton.rect.x = 10
+                    DifficultyButton.rect.x = 120
                     DifficultyButton.rect.y = 480
                     all_sprites_list.add(DifficultyButton)
                     difficulty_list.add(DifficultyButton)
@@ -249,7 +251,7 @@ while running:
             game_time = stopwatch
             stopwatch = 0
             scene = 3
-            scene_list.add(Button)
+            scene_list.add(PlayButton)
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
