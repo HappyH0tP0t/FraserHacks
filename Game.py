@@ -41,7 +41,7 @@ while running:
     # update screen (do this last)
     screen.fill((255, 255, 255))
 
-    pygame.draw.circle(screen, red, (250, 250), 250)
+    pygame.draw.circle(screen, red, (mouseX, mouseY), 10)
     
     pygame.display.flip()
     clock.tick(60)
