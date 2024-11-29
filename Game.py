@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+import math
 
 #Set up
 pygame.init()
@@ -38,6 +39,21 @@ class BaseTarget(Block):
 
         self.operatorType = operatorType
         self.operatorNumber = operatorNumber
+
+# functions
+def getBiasedTarget(current, goal):
+    operators = ["+","-","*","/"]
+    direction = math.copysign(1, goal - current)
+    if direction > 0:
+        operators += ["+", "+", "+", "*", "*", "*"]
+    else:
+        operators += ["-", "-", "-", "/", "/", "/"]
+    newTarget = BaseTarget(RED, 25,25, operators[random.randint(0,3)], random.randint(1,5))
+    # Set a random location for the target sprite
+    newTarget.rect.x = random.randint(100, 800)
+    newTarget.rect.y = random.randint(100, 500)
+    return newTarget
+    
 
 ##Main
 
@@ -82,11 +98,11 @@ currentNumber = random.randint(0, 100)
 stopwatch = 0
 
 # This represents a button sprite
-Button = Block(BLACK, 50,50)
+Button = Block(BLACK, 290,140)
 
 # Set a location for the target sprite
-Button.rect.x = 0
-Button.rect.y = 0
+Button.rect.x = 305
+Button.rect.y = 290
 
 # Add the target sprite to the list of objects
 all_sprites_list.add(Button)
@@ -146,11 +162,8 @@ while running:
                         currentNumber /= target.operatorNumber
                         currentNumber = int(currentNumber)
                     target.kill()
-                    newTarget = BaseTarget(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
-                    # Set a random location for the target sprite
-                    newTarget.rect.x = random.randint(100, 800)
-                    newTarget.rect.y = random.randint(100, 500)
-                
+                    
+                    newTarget = getBiasedTarget(currentNumber, goalNumber)
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
                     target_list.add(newTarget)
@@ -170,14 +183,14 @@ while running:
     if scene == 1:
         screen.fill(WHITE)
 
-        #summons the starting image
-        screen.blit(intro_page, (0,0))
         #pretty much just draws the targets rn
         scene_list.draw(screen)
-        
+        #summons the starting image
+        screen.blit(intro_page, (0,0))
 
 
     elif scene == 2:
+        Button.kill()
         # update screen (do this last)
         screen.fill(WHITE)
 
