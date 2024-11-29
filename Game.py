@@ -5,6 +5,7 @@ import math
 
 #Set up
 pygame.init()
+pygame.display.set_caption("It's Mathin' Time!")
 screen = pygame.display.set_mode((960, 540))
 clock = pygame.time.Clock()
 running = True
@@ -48,19 +49,21 @@ def getBiasedTarget(current, goal):
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
         operators += ["-", "-", "-", "/", "/", "/"]
-    newTarget = BaseTarget(RED, 25,25, operators[random.randint(0,3)], random.randint(1,5))
+    #CREATING NEW TARGET    
+    newTarget = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
     # Set a random location for the target sprite
     newTarget.rect.x = random.randint(100, 800)
     newTarget.rect.y = random.randint(100, 500)
+    for t in target_list:
+        if Target.rect.collidepoint((t.rect.x, t.rect.y)):
+            Target.rect.x = random.randint(100, 800)
+            Target.rect.y = random.randint(100, 500)
     return newTarget
     
 
 ##Main
 
 #Variables
-stopwatch = 0
-game_time = 0
-
 #List
 all_sprites_list = pygame.sprite.Group()
 target_list = pygame.sprite.Group()
@@ -112,21 +115,14 @@ scene_list.add(Button)
 for i in range(5):
     # This represents a target sprite
     Target = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
-    target_x_values = []
-    target_y_values = []
 
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
     Target.rect.y = random.randint(100, 500)
-    for x in target_x_values:
-        if Target.rect.x == x:
-            while Target.rect.x == x:
-                Target.rect.x = random.randint(100, 800)
-    for y in target_y_values:
-        if Target.rect.y == y:
-            while Target.rect.y == y:
-                Target.rect.y = random.randint(100, 500)
-
+    for t in target_list:
+        if Target.rect.collidepoint((t.rect.x, t.rect.y)):
+            Target.rect.x = random.randint(100, 800)
+            Target.rect.y = random.randint(100, 500)
 
     # Add the target sprite to the list of objects
     all_sprites_list.add(Target)
@@ -161,6 +157,7 @@ while running:
                     if target.operatorType == "/":
                         currentNumber /= target.operatorNumber
                         currentNumber = int(currentNumber)
+                    #REMOVING OLD TARGET
                     target.kill()
                     
                     newTarget = getBiasedTarget(currentNumber, goalNumber)
@@ -213,16 +210,13 @@ while running:
             currentNumber = random.randint(0, 100)
             goalNumber = random.randint(0, 100)
             stopwatch = 0
-            game_time = stopwatch
+            print("lol you won")
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        screen.blit(my_font.render("time: " + str(stopwatch), False, (0, 0, 0)), (0, 0))
+        screen.blit(my_font.render("time: " + str(round(stopwatch)), False, (0, 0, 0)), (0, 0))
         screen.blit(my_font.render("current number: " + str(currentNumber), False, (0, 0, 0)), (0, 30))
         screen.blit(my_font.render("goal number: " + str(goalNumber), False, (0, 0, 0)), (0, 60))
-
-    elif scene ==3:
-        pass
 
     pygame.display.flip()
     clock.tick(60)
