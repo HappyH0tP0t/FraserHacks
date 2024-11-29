@@ -11,15 +11,13 @@ pygame.font.init()
 
 ##classes
 class Block(pygame.sprite.Sprite):
-    def __init__(self, color, width,height, operatorType, operatorNumber):
+    def __init__(self, color, width,height):
         # Constructor. Pass in the color of the block, and its size.
  
         # Call the parent class (Sprite) constructor
         super().__init__()
  
         # initiate the properties
-        self.operatorType = operatorType
-        self.operatorNumber = operatorNumber
         self.color = color
         self.width = width
         self.height = height
@@ -34,6 +32,12 @@ class Block(pygame.sprite.Sprite):
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
 
+class BaseTarget(Block):
+    def __init__(self, color, width, height, operatorType, operatorNumber):
+        super().__init__(color, width, height)
+
+        self.operatorType = operatorType
+        self.operatorNumber = operatorNumber
 
 ##Main
 
@@ -82,7 +86,7 @@ scene_list.add(Button)
 #Target sprite set up
 for i in range(5):
     # This represents a target sprite
-    Target = Block(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
+    Target = BaseTarget(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
  
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
