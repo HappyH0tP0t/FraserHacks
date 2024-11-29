@@ -85,6 +85,7 @@ text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
 #images
 intro_page = pygame.image.load('Start-screen-image.jpg')
+intro_page = pygame.transform.scale(intro_page,(960, 540))
 intro_page = intro_page.convert()
 
 # counters
