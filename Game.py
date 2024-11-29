@@ -45,10 +45,18 @@ class BaseTarget(Block):
 def getBiasedTarget(current, goal):
     operators = ["+","-","*","/"]
     direction = math.copysign(1, goal - current)
+    if difficulty == "hard":
+        direction *= -1
+        operators += ["^", "√"]
     if direction > 0:
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
         operators += ["-", "-", "-", "/", "/", "/"]
+    newTarget = BaseTarget(WHITE, 80, 80, operator[random.randint(0,3)], random.randint(1,5))
+
+    # Set a random location for the target sprite
+    newTarget.rect.x = random.randint(100, 800)
+    newTarget.rect.y = random.randint(100, 500)
     return newTarget
     
 
@@ -61,7 +69,7 @@ def getBiasedTarget(current, goal):
 all_sprites_list = pygame.sprite.Group()
 target_list = pygame.sprite.Group()
 scene_list = pygame.sprite.Group()
-
+difficulty_list = pygame.sprite.Group()
 #Mouse position
 last_frame_mouse_x, last_frame_mouse_y = pygame.mouse.get_pos()
 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -93,17 +101,23 @@ goal_number = random.randint(0, 100)
 current_number = random.randint(0, 100)
 stopwatch = 0
 game_time = 0
+difficulty = "easy"
 
-# This represents scene 1 button sprite
-Button = Block(WHITE, 290,140)
+# Create Buttons
+PlayButton = Block(BLACK, 290,140)
+DifficultyButton = Block(GREEN, 50, 50)
 
-# Set a location for the button sprite
-Button.rect.x = 305
-Button.rect.y = 290
+# Set a location for the target sprite
+PlayButton.rect.x = 305
+PlayButton.rect.y = 290
+DifficultyButton.rect.x = 10
+DifficultyButton.rect.y = 480
 
-# Add the button sprite to the list of objects
-all_sprites_list.add(Button)
-scene_list.add(Button)
+# Add the target sprite to the list of objects
+all_sprites_list.add(PlayButton)
+scene_list.add(PlayButton)
+all_sprites_list.add(DifficultyButton)
+difficulty_list.add(DifficultyButton)
 
 #Target sprite set up
 for i in range(5):
@@ -150,13 +164,19 @@ while running:
                         current_number *= target.operatorNumber
                     if target.operatorType == "/":
                         current_number /= target.operatorNumber
-                        current_number = int(current_number)
+                    if target.operatorType == "√":
+                        current_number = math.sqrt(current_number)
+                    if target.operatorType == "^":
+                        current_number = math.pow(current_number, target.operatorNumber)
+                    current_number = int(current_number)
+                    current_number = max(current_number, 0)
 
                     #REMOVING OLD TARGET
                     target.kill()
 
                     #CREATING NEW TARGET    
                     newTarget = BaseTarget(WHITE, 75, 75, operator[random.randint(0,3)], random.randint(1,5))
+                    newTarget = getBiasedTarget(current_number, goal_number)
                     
                     # Set a random location for the target sprite
                     newTarget.rect.x = random.randint(100, 800)
@@ -177,6 +197,19 @@ while running:
                         scene = 2
                     else:
                         scene = 1
+            for target in difficulty_list:
+                if (target.rect.collidepoint(mouse_x, mouse_y)):
+                    if difficulty == "easy":
+                        difficulty = "hard"
+                    else:
+                        difficulty = "easy"
+                    target.kill()
+                    DifficultyButton = Block(GREEN if difficulty == "easy" else RED, 50, 50)
+                    DifficultyButton.rect.x = 10
+                    DifficultyButton.rect.y = 480
+                    all_sprites_list.add(DifficultyButton)
+                    difficulty_list.add(DifficultyButton)
+
 
         #hack button which allows you to instally get to the goal number                
         if event.type == pygame.KEYDOWN:
@@ -190,12 +223,17 @@ while running:
 
         #pretty much just draws the targets rn
         scene_list.draw(screen)
+
         #summons the starting image
         screen.blit(intro_page, (0,0))
 
+        difficulty_list.draw(screen)
+
 
     elif scene == 2:
-        scene_list.remove(Button)
+        PlayButton.kill()
+        DifficultyButton.kill() 
+        scene_list.remove(PlayButton)
         # update screen (do this last)
         screen.fill(WHITE)
 
@@ -206,7 +244,7 @@ while running:
 
             #gives it the operations
             my_font = pygame.font.SysFont('Comic Sans MS', 30)
-            text_surface = my_font.render(target.operatorType + str(target.operatorNumber), False, BLACK)
+            text_surface = my_font.render(target.operatorType + (str(target.operatorNumber) if target.operatorType != "√" else ""), False, BLACK)
             screen.blit(text_surface, (target_circle.centerx - 20, target_circle.centery - 20))
 
         # draw the mouse
