@@ -1,11 +1,16 @@
 import pygame
+<<<<<<< HEAD
 import random
+=======
+import time
+>>>>>>> ee141406fcd88a891f57345b4be4076b2979e857
 
 #Set up
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((960, 540))
 clock = pygame.time.Clock()
 running = True
+pygame.font.init() 
 
 ##classes
 class Block(pygame.sprite.Sprite):
@@ -27,8 +32,27 @@ class Block(pygame.sprite.Sprite):
 
 ##Main
 
+
 #Variables
+<<<<<<< HEAD
 all_sprites_list = pygame.sprite.Group()
+=======
+lastFrameMouseX, lastFrameMouseY = pygame.mouse.get_pos()
+mouseX, mouseY = pygame.mouse.get_pos()
+lastFrameTime = time.time()
+## Text
+my_font = pygame.font.SysFont('Comic Sans MS', 30)
+text_surface = my_font.render('Some Text', False, (0, 0, 0))
+
+#The target things
+targets = [
+    {
+        "positionX": 0,
+        "positionY": 0,
+        "text": "5"
+    }
+]
+>>>>>>> ee141406fcd88a891f57345b4be4076b2979e857
 
 #Colors
 RED = (255,0,0)
@@ -49,14 +73,37 @@ for i in range(5):
 
 # Loop
 while running:
+    # calculate deltatime
+    currentTime = time.time()
+    deltaTime = currentTime - lastFrameTime
+    lastFrameTime = currentTime
+    # calculate mouse deltas
+    mouseX, mouseY = pygame.mouse.get_pos()
+    mouseDeltaX, mouseDeltaY = mouseX - lastFrameMouseX, mouseY - lastFrameMouseY
+    lastFrameMouseX, lastFrameMouseY = mouseX, mouseY
+    
+    # debbug
+    # print(deltaTime)
+
+    # keep an eye out for quitting
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+<<<<<<< HEAD
             
     screen.fill((255, 255, 255))
 
     all_sprites_list.draw(screen)
     
+=======
+
+    # update screen (do this last)
+    screen.fill((255, 255, 255))
+
+    pygame.draw.circle(screen, red, (mouseX, mouseY), 10)
+    screen.blit(text_surface, (mouseX, mouseY))
+
+>>>>>>> ee141406fcd88a891f57345b4be4076b2979e857
     pygame.display.flip()
     clock.tick(60)
 
