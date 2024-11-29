@@ -57,6 +57,11 @@ def getBiasedTarget(current, goal):
     # Set a random location for the target sprite
     newTarget.rect.x = random.randint(100, 800)
     newTarget.rect.y = random.randint(100, 450)
+    for sprite in target_list:
+        if pygame.sprite.collide_rect(sprite, newTarget):
+            newTarget.rect.x = random.randint(100, 800)
+            newTarget.rect.y = random.randint(100, 450)
+
     return newTarget
     
 
