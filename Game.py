@@ -107,7 +107,7 @@ scene_list.add(Button)
 #Target sprite set up
 for i in range(5):
     # This represents a target sprite
-    Target = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
+    Target = BaseTarget(WHITE, 80, 80, operator[random.randint(0,3)], random.randint(1,5))
 
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
@@ -202,12 +202,13 @@ while running:
 
         #pretty much just draws the targets rn
         all_sprites_list.draw(screen)
-
-        #gives it the operations
         for target in target_list:
+            target_circle = pygame.draw.circle(screen, RED, target.rect.center, 40)
+
+            #gives it the operations
             my_font = pygame.font.SysFont('Comic Sans MS', 30)
             text_surface = my_font.render(target.operatorType + str(target.operatorNumber), False, BLACK)
-            screen.blit(text_surface, (target.rect.x, target.rect.y))
+            screen.blit(text_surface, (target_circle.centerx - 20, target_circle.centery - 20))
 
         # draw the mouse
         pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
