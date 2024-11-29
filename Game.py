@@ -219,7 +219,7 @@ while running:
 
         #hack button which allows you to instally get to the goal number                
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RCTRL:
+            if event.key == pygame.K_RCTRL and scene == 2:
                 current_number = goal_number
 
     all_sprites_list.update()
