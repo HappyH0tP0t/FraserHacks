@@ -47,6 +47,7 @@ last_frame_mouse_x, last_frame_mouse_y = pygame.mouse.get_pos()
 mouse_x, mouse_y = pygame.mouse.get_pos()
 last_frame_time = time.time()
 
+operator = ["+","-","*","/"]
 
 #Colors
 RED = (255,0,0)
@@ -60,7 +61,7 @@ text_surface = my_font.render('Some Text', False, (0, 0, 0))
 #Target sprite set up
 for i in range(5):
     # This represents a Bad sprite
-    Target = Block(RED, 25,25, "*", 4)
+    Target = Block(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
  
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
@@ -95,7 +96,14 @@ while running:
                     sprite.kill()
 
     all_sprites_list.update()
-    
+
+    # update screen (do this last)  
+    screen.fill((255, 255, 255))
+
+    #pretty much just draws the targets rn
+    all_sprites_list.draw(screen)
+
+    #gives it the operations
     for sprite in all_sprites_list:
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         text_surface = my_font.render(sprite.operatorType + str(sprite.operatorNumber), False, (0, 0, 0))
@@ -103,11 +111,6 @@ while running:
     
     # draw the mouse
     pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
-
-    # update screen (do this last)  
-    screen.fill((255, 255, 255))
-
-    all_sprites_list.draw(screen)
 
     pygame.display.flip()
     clock.tick(60)
