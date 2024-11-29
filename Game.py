@@ -62,14 +62,8 @@ def getBiasedTarget(current, goal):
 
 ##Main
 
-#Colors
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-WHITE = (255,255,255)
-BLACK = (0,0,0)
-
 #Variables
+
 
 #List
 all_sprites_list = pygame.sprite.Group()
@@ -87,6 +81,13 @@ operator = ["+","-","*","/"]
 
 #scene number
 scene = 1
+
+#Colors
+RED = (255,0,0)
+GREEN = (0,255,0)
+BLUE = (0,0,255)
+WHITE = (255,255,255)
+BLACK = (0,0,0)
 
 # Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -205,7 +206,7 @@ while running:
 
         #hack button which allows you to instally get to the goal number                
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RCTRL and scene == 2:
+            if event.key == pygame.K_RCTRL:
                 current_number = goal_number
 
     all_sprites_list.update()
@@ -224,8 +225,7 @@ while running:
 
     elif scene == 2:
         PlayButton.kill()
-        DifficultyButton.kill()
-        difficulty_list.remove(DifficultyButton)
+        DifficultyButton.kill() 
         scene_list.remove(PlayButton)
         # update screen (do this last)
         screen.fill(WHITE)
@@ -252,11 +252,10 @@ while running:
             stopwatch = 0
             scene = 3
             scene_list.add(PlayButton)
-            difficulty_list.add(DifficultyButton)
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        screen.blit(my_font.render("time: " + str(round(stopwatch * 1000) / 1000), False, (0, 0, 0)), (0, 0))
+        screen.blit(my_font.render("time: " + str(round(stopwatch * 100) / 100), False, (0, 0, 0)), (0, 0))
         screen.blit(my_font.render("current number: " + str(current_number), False, (0, 0, 0)), (0, 30))
         screen.blit(my_font.render("goal number: " + str(goal_number), False, (0, 0, 0)), (0, 60))
 
