@@ -11,23 +11,34 @@ pygame.font.init()
 
 ##classes
 class Block(pygame.sprite.Sprite):
-    def __init__(self, color, width,height):
+    def __init__(self, color, width,height, operatorType, operatorNumber):
         # Constructor. Pass in the color of the block, and its size.
  
         # Call the parent class (Sprite) constructor
         super().__init__()
  
-        # Create an image of the block, and fill it with a color.
+        # initiate the properties
+        self.operatorType = operatorType
+        self.operatorNumber = operatorNumber
+        self.color = color
+        self.width = width
+        self.height = height
+
+        # Create an image of the block, and fill it with a color
         self.image = pygame.Surface([width,height])
         self.image.fill(color)
-
+        
         # Fetch the rectangle object that has the dimensions of the image
         # image.
         # Update the position of this object by setting the values
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
 
+        #
+
+
 ##Main
+
 
 #Variables
 all_sprites_list = pygame.sprite.Group()
@@ -49,7 +60,7 @@ text_surface = my_font.render('Some Text', False, (0, 0, 0))
 #Target sprite set up
 for i in range(5):
     # This represents a Bad sprite
-    Target = Block(RED, 25,25)
+    Target = Block(RED, 25,25, "*", 4)
  
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
@@ -80,6 +91,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             for sprite in all_sprites_list:
                 if (sprite.rect.collidepoint((mouse_x, mouse_y))):
+                    print(str(sprite.operatorType)+ str(sprite.operatorNumber))
                     sprite.kill()
 
     all_sprites_list.update()
