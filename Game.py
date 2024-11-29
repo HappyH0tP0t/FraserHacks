@@ -29,6 +29,11 @@ class Block(pygame.sprite.Sprite):
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
 
+        #Game content setup
+def start_generate_values():
+    goal_value = randint(1, 101) #the goal the player tries to reach
+    starting_value = randint(1,11) #the number the player starts with
+
 ##Main
 
 
