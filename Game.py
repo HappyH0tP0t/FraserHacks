@@ -77,7 +77,7 @@ BLACK = (0,0,0)
 
 #play button dimensions
 play_button_x = 315
-play_button_y = 280
+play_button_y = 245
 play_button_width = 290
 play_button_length = 140
 
