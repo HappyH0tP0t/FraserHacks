@@ -172,6 +172,9 @@ while running:
 
                     else:
                         scene = 1
+        if event.type == pygame.KEYDOWN and pygame.K_RIGHTBRACKET:
+            goalNumber = currentNumber
+            print("works")
 
     all_sprites_list.update()
 
