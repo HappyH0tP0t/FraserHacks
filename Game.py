@@ -27,26 +27,15 @@ class Block(pygame.sprite.Sprite):
         # Create an image of the block, and fill it with a color
         self.image = pygame.Surface([width,height])
         self.image.fill(color)
- 
+        
         # Fetch the rectangle object that has the dimensions of the image
         # image.
         # Update the position of this object by setting the values
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
-    def updateAppearance(self):
-        # Create an image of the block, and fill it with a color
-        self.image = pygame.Surface([self.width,self.height])
-        self.image.fill(self.color)
 
-        # create text
-        my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        text_surface = my_font.render(self.operatorType + str(self.operatorNumber), False, (0, 0, 0))
-        screen.blit(text_surface, (self.rect.x, self.rect.y))
+        #
 
-        #Game content setup
-def start_generate_values():
-    goal_value = randint(1, 101) #the goal the player tries to reach
-    starting_value = randint(1,11) #the number the player starts with
 
 ##Main
 
@@ -58,14 +47,15 @@ last_frame_mouse_x, last_frame_mouse_y = pygame.mouse.get_pos()
 mouse_x, mouse_y = pygame.mouse.get_pos()
 last_frame_time = time.time()
 
-## Text
-my_font = pygame.font.SysFont('Comic Sans MS', 30)
-text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
 #Colors
 RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0,0,255)
+
+## Text
+my_font = pygame.font.SysFont('Comic Sans MS', 30)
+text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
 #Target sprite set up
 for i in range(5):
@@ -103,16 +93,21 @@ while running:
                 if (sprite.rect.collidepoint((mouse_x, mouse_y))):
                     print(str(sprite.operatorType)+ str(sprite.operatorNumber))
                     sprite.kill()
-    for sprite in all_sprites_list:
-        sprite.updateAppearance()
+
+    all_sprites_list.update()
     
-    # update screen (do this last)     
+    for sprite in all_sprites_list:
+        my_font = pygame.font.SysFont('Comic Sans MS', 30)
+        text_surface = my_font.render(sprite.operatorType + str(sprite.operatorNumber), False, (0, 0, 0))
+        screen.blit(text_surface, (sprite.rect.x, sprite.rect.y))
+    
+    # draw the mouse
+    pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
+
+    # update screen (do this last)  
     screen.fill((255, 255, 255))
 
     all_sprites_list.draw(screen)
-
-    pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
-    screen.blit(text_surface, (mouse_x, mouse_y))
 
     pygame.display.flip()
     clock.tick(60)
