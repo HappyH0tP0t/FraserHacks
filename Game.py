@@ -288,9 +288,11 @@ while running:
 
         #screen background fill
         screen.fill(BLACK)
-        screen.blit(edging_page, (0,0))
+       
         #drawing the button
         scene_list.draw(screen)
+
+        screen.blit(edging_page, (0,0))
 
 
     pygame.display.flip()
