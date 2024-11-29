@@ -110,8 +110,8 @@ PlayButton = Block(WHITE, 290,140)
 DifficultyButton = Block(GREEN, 50, 50)
 
 # Set a location for the target sprite
-PlayButton.rect.x = 305
-PlayButton.rect.y = 290
+PlayButton.rect.x = 315
+PlayButton.rect.y = 280
 DifficultyButton.rect.x = 120
 DifficultyButton.rect.y = 480
 
