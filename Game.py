@@ -102,12 +102,6 @@ operator = ["+","-","*","/"]
 #scene number
 scene = 1
 
-#Colors
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-WHITE = (255,255,255)
-BLACK = (0,0,0)
 
 # Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -128,8 +122,9 @@ stopwatch = 0
 game_time = 0
 difficulty = "easy"
 
+#Object creation
 # Create Buttons
-PlayButton = Block(WHITE, 290,104)
+PlayButton = Block(WHITE, play_button_width,play_button_length)
 DifficultyButton = Block(GREEN, 50, 50)
 
 # Set a location for the target sprite
