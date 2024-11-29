@@ -32,21 +32,14 @@ class Block(pygame.sprite.Sprite):
 
 #Variables
 all_sprites_list = pygame.sprite.Group()
-lastFrameMouseX, lastFrameMouseY = pygame.mouse.get_pos()
-mouseX, mouseY = pygame.mouse.get_pos()
-lastFrameTime = time.time()
+
+last_frame_mouse_x, last_frame_mouse_y = pygame.mouse.get_pos()
+mouse_x, mouse_y = pygame.mouse.get_pos()
+last_frame_time = time.time()
+
 ## Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Some Text', False, (0, 0, 0))
-
-#The target things
-targets = [
-    {
-        "positionX": 0,
-        "positionY": 0,
-        "text": "5"
-    }
-]
 
 #Colors
 RED = (255,0,0)
@@ -59,8 +52,8 @@ for i in range(5):
     Target = Block(RED, 25,25)
  
     # Set a random location for the target sprite
-    Target.rect.x = random.randint(100, 900)
-    Target.rect.y = random.randint(100, 600)
+    Target.rect.x = random.randint(100, 800)
+    Target.rect.y = random.randint(100, 500)
  
     # Add the target sprite to the list of objects
     all_sprites_list.add(Target)
@@ -68,13 +61,14 @@ for i in range(5):
 # Loop
 while running:
     # calculate deltatime
-    currentTime = time.time()
-    deltaTime = currentTime - lastFrameTime
-    lastFrameTime = currentTime
+    current_time = time.time()
+    delta_time = current_time - last_frame_time
+    last_frame_time = current_time
+
     # calculate mouse deltas
-    mouseX, mouseY = pygame.mouse.get_pos()
-    mouseDeltaX, mouseDeltaY = mouseX - lastFrameMouseX, mouseY - lastFrameMouseY
-    lastFrameMouseX, lastFrameMouseY = mouseX, mouseY
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    mouse_delta_x, mouse_delta_y = mouse_x - last_frame_mouse_x, mouse_y - last_frame_mouse_y
+    last_frame_mouse_x, last_frame_mouse_y = mouse_x, mouse_y
     
     # debbug
     # print(deltaTime)
@@ -89,10 +83,8 @@ while running:
 
     all_sprites_list.draw(screen)
 
-
-
-    pygame.draw.circle(screen, RED, (mouseX, mouseY), 10)
-    screen.blit(text_surface, (mouseX, mouseY))
+    pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
+    screen.blit(text_surface, (mouse_x, mouse_y))
 
     pygame.display.flip()
     clock.tick(60)
