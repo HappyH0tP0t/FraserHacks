@@ -214,13 +214,13 @@ while running:
                         scene = 2
                     else:
                         scene = 1
-            for spirte in difficulty_list:
+            for sprite in difficulty_list:
                 if (sprite.rect.collidepoint(mouse_x, mouse_y)):
                     if difficulty == "easy":
                         difficulty = "hard"
                     else:
                         difficulty = "easy"
-                    spirte.kill()
+                    sprite.kill()
                     DifficultyButton = Block(GREEN if difficulty == "easy" else RED, 50, 50)
                     DifficultyButton.rect.x = 120
                     DifficultyButton.rect.y = 480
