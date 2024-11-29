@@ -52,9 +52,6 @@ def getBiasedTarget(current, goal):
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
         operators += ["-", "-", "-", "/", "/", "/"]
-    newTarget = BaseTarget(RED, 40, 40, operators[random.randint(0,len(operators) - 1)], random.randint(1,5))
-    newTarget.rect.x = random.randint(100, 800)
-    newTarget.rect.y = random.randint(100, 500)
     return newTarget
     
 
@@ -119,8 +116,7 @@ difficulty_list.add(DifficultyButton)
 #Target sprite set up
 for i in range(5):
     # This represents a target sprite
-    # Target = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
-    Target = getBiasedTarget(current_number, goal_number)
+    Target = BaseTarget(WHITE, 80, 80, operator[random.randint(0,3)], random.randint(1,5))
 
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
@@ -186,12 +182,10 @@ while running:
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
                     target_list.add(newTarget)
-            for target in scene_list:
-                if (target.rect.collidepoint(mouse_x, mouse_y)):
+            for sprite in scene_list:
+                if (sprite.rect.collidepoint(mouse_x, mouse_y)):
                     if scene == 1:
                         scene = 2
-                        # sprite.update(color, BLACK)
-
                     else:
                         scene = 1
             for target in difficulty_list:
@@ -230,17 +224,19 @@ while running:
     elif scene == 2:
         PlayButton.kill()
         DifficultyButton.kill() 
+        scene_list.remove(Button)
         # update screen (do this last)
         screen.fill(WHITE)
 
         #pretty much just draws the targets rn
         all_sprites_list.draw(screen)
-
-        #gives it the operations
         for target in target_list:
+            target_circle = pygame.draw.circle(screen, RED, target.rect.center, 40)
+
+            #gives it the operations
             my_font = pygame.font.SysFont('Comic Sans MS', 30)
             text_surface = my_font.render(target.operatorType + (str(target.operatorNumber) if target.operatorType != "√" else ""), False, BLACK)
-            screen.blit(text_surface, (target.rect.x, target.rect.y))
+            screen.blit(text_surface, (target_circle.centerx - 20, target_circle.centery - 20))
 
         # draw the mouse
         pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
@@ -252,12 +248,20 @@ while running:
             goal_number = random.randint(0, 100)
             game_time = stopwatch
             stopwatch = 0
+            scene = 3
+            scene_list.add(Button)
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
         screen.blit(my_font.render("time: " + str(round(stopwatch)), False, (0, 0, 0)), (0, 0))
         screen.blit(my_font.render("current number: " + str(current_number), False, (0, 0, 0)), (0, 30))
         screen.blit(my_font.render("goal number: " + str(goal_number), False, (0, 0, 0)), (0, 60))
+
+    elif scene == 3:
+        screen.fill(BLACK)
+
+        scene_list.draw(screen)
+
 
     pygame.display.flip()
     clock.tick(60)
