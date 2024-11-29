@@ -56,6 +56,7 @@ def getBiasedTarget(current, goal):
 
 #Variables
 
+
 #List
 all_sprites_list = pygame.sprite.Group()
 target_list = pygame.sprite.Group()
@@ -228,8 +229,11 @@ while running:
         screen.blit(my_font.render("goal number: " + str(goal_number), False, (0, 0, 0)), (0, 60))
 
     elif scene == 3:
-        screen.fill(BLACK)
 
+        #screen background fill
+        screen.fill(BLACK)
+        
+        #drawing the button
         scene_list.draw(screen)
 
 
