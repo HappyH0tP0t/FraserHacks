@@ -49,15 +49,6 @@ def getBiasedTarget(current, goal):
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
         operators += ["-", "-", "-", "/", "/", "/"]
-    #CREATING NEW TARGET    
-    newTarget = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
-    # Set a random location for the target sprite
-    newTarget.rect.x = random.randint(100, 800)
-    newTarget.rect.y = random.randint(100, 500)
-    for t in target_list:
-        if Target.rect.collidepoint((t.rect.x, t.rect.y)):
-            Target.rect.x = random.randint(100, 800)
-            Target.rect.y = random.randint(100, 500)
     return newTarget
     
 
@@ -159,7 +150,16 @@ while running:
                         currentNumber = int(currentNumber)
                     #REMOVING OLD TARGET
                     target.kill()
-                    
+                    #CREATING NEW TARGET    
+                    newTarget = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
+                    # Set a random location for the target sprite
+                    newTarget.rect.x = random.randint(100, 800)
+                    newTarget.rect.y = random.randint(100, 500)
+                    for t in target_list:
+                        if newTarget.rect.collidepoint((t.rect.x, t.rect.y)):
+                            print("HEY")
+                            newTarget.rect.x = random.randint(100, 800)
+                            newTarget.rect.y = random.randint(100, 500)
                     newTarget = getBiasedTarget(currentNumber, goalNumber)
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
