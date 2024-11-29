@@ -73,7 +73,7 @@ text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
 
 # This represents a button sprite
-Button = Block(BLACK, 50,50, operator[random.randint(0,3)], random.randint(1,5))
+Button = Block(BLACK, 50,50)
 
 # Set a location for the target sprite
 Button.rect.x = 0
@@ -145,7 +145,7 @@ while running:
         all_sprites_list.draw(screen)
 
         #gives it the operations
-        for sprite in all_sprites_list:
+        for sprite in target_list:
             my_font = pygame.font.SysFont('Comic Sans MS', 30)
             text_surface = my_font.render(sprite.operatorType + str(sprite.operatorNumber), False, (0, 0, 0))
             screen.blit(text_surface, (sprite.rect.x, sprite.rect.y))
