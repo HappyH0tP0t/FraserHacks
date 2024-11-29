@@ -225,6 +225,7 @@ while running:
 
     elif scene == 2:
         PlayButton.kill()
+        DifficultyButton.kill()
         difficulty_list.remove(DifficultyButton)
         scene_list.remove(PlayButton)
         # update screen (do this last)
