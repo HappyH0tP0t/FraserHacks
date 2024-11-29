@@ -191,7 +191,8 @@ while running:
                     if target.operatorType == "/":
                         current_number /= target.operatorNumber
                     if target.operatorType == "√":
-                        current_number = math.sqrt(current_number)
+                        if current_number != 0:
+                            current_number = math.sqrt(current_number)
                     if target.operatorType == "^":
                         current_number = math.pow(current_number, target.operatorNumber)
                     current_number = int(current_number)
