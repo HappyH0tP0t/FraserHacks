@@ -14,6 +14,11 @@ lastFrameMouseX, lastFrameMouseY = pygame.mouse.get_pos()
 mouseX, mouseY = pygame.mouse.get_pos()
 lastFrameTime = time.time()
 
+#Color
+red = (255,0,0)
+green = (0,255,0)
+blue = (0,0,255)
+
 # Loop
 while running:
     # calculate deltatime
@@ -35,6 +40,10 @@ while running:
 
     # update screen (do this last)
     screen.fill((255, 255, 255))
+
+    pygame.draw.circle(screen, red, (250, 250), 250)
+    
     pygame.display.flip()
+    clock.tick(60)
 
 pygame.quit()
