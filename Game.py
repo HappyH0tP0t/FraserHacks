@@ -1,9 +1,6 @@
 import pygame
-<<<<<<< HEAD
 import random
-=======
 import time
->>>>>>> ee141406fcd88a891f57345b4be4076b2979e857
 
 #Set up
 pygame.init()
@@ -34,9 +31,7 @@ class Block(pygame.sprite.Sprite):
 
 
 #Variables
-<<<<<<< HEAD
 all_sprites_list = pygame.sprite.Group()
-=======
 lastFrameMouseX, lastFrameMouseY = pygame.mouse.get_pos()
 mouseX, mouseY = pygame.mouse.get_pos()
 lastFrameTime = time.time()
@@ -52,7 +47,6 @@ targets = [
         "text": "5"
     }
 ]
->>>>>>> ee141406fcd88a891f57345b4be4076b2979e857
 
 #Colors
 RED = (255,0,0)
@@ -89,21 +83,17 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-<<<<<<< HEAD
-            
+
+    # update screen (do this last)     
     screen.fill((255, 255, 255))
 
     all_sprites_list.draw(screen)
-    
-=======
 
-    # update screen (do this last)
-    screen.fill((255, 255, 255))
 
-    pygame.draw.circle(screen, red, (mouseX, mouseY), 10)
+
+    pygame.draw.circle(screen, RED, (mouseX, mouseY), 10)
     screen.blit(text_surface, (mouseX, mouseY))
 
->>>>>>> ee141406fcd88a891f57345b4be4076b2979e857
     pygame.display.flip()
     clock.tick(60)
 
