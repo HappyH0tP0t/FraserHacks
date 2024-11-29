@@ -66,8 +66,15 @@ def getBiasedTarget(current, goal):
     
 
 ##Main
+#Colors
+RED = (255,0,0)
+GREEN = (0,255,0)
+BLUE = (0,0,255)
+WHITE = (255,255,255)
+BLACK = (0,0,0)
 
 #Variables
+
 #play button dimensions
 play_button_x = 315
 play_button_y = 280
@@ -101,7 +108,6 @@ operator = ["+","-","*","/"]
 
 #scene number
 scene = 1
-
 
 # Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
