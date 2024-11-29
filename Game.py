@@ -117,9 +117,19 @@ intro_page = pygame.image.load('Start-screen-image.jpg')
 intro_page = pygame.transform.scale(intro_page,(960, 540))
 intro_page = intro_page.convert()
 
-#Object creation
+edging_page = pygame.image.load('ending-screen.jpg')
+edging_page = pygame.transform.scale(edging_page,(960, 540))
+edging_page = edging_page.convert()
+
+# counters
+goal_number = random.randint(0, 100)
+current_number = random.randint(0, 100)
+stopwatch = 0
+game_time = 0
+difficulty = "easy"
+
 # Create Buttons
-PlayButton = Block(WHITE, play_button_width,play_button_length)
+PlayButton = Block(WHITE, 290,104)
 DifficultyButton = Block(GREEN, 50, 50)
 
 # Set a location for the target sprite
@@ -276,7 +286,7 @@ while running:
 
         #screen background fill
         screen.fill(BLACK)
-        
+        screen.blit(edging_page, (0,0))
         #drawing the button
         scene_list.draw(screen)
 
