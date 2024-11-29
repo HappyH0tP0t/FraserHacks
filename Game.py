@@ -43,6 +43,11 @@ class Block(pygame.sprite.Sprite):
         text_surface = my_font.render(self.operatorType + str(self.operatorNumber), False, (0, 0, 0))
         screen.blit(text_surface, (self.rect.x, self.rect.y))
 
+        #Game content setup
+def start_generate_values():
+    goal_value = randint(1, 101) #the goal the player tries to reach
+    starting_value = randint(1,11) #the number the player starts with
+
 ##Main
 
 
