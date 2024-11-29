@@ -113,6 +113,8 @@ scene = 1
 # Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Some Text', False, BLACK)
+final_time = my_font.render('Some Text', False, BLACK)
+
 #images
 intro_page = pygame.image.load('Start-screen-image.jpg')
 intro_page = pygame.transform.scale(intro_page,(960, 540))
@@ -279,6 +281,8 @@ while running:
             scene = 3
             scene_list.add(PlayButton)
             difficulty_list.add(DifficultyButton)
+            final_time_text = my_font.render("Your final time is:", False, WHITE)   
+            final_time = my_font.render(str(round(game_time,3)), False, WHITE)                
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -295,6 +299,8 @@ while running:
         scene_list.draw(screen)
 
         screen.blit(edging_page, (0,0))
+        screen.blit(final_time_text, (40,300))
+        screen.blit(final_time, (120, 350))
 
 
     pygame.display.flip()
