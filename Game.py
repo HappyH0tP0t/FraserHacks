@@ -93,14 +93,14 @@ current_number = random.randint(0, 100)
 stopwatch = 0
 game_time = 0
 
-# This represents a button sprite
-Button = Block(BLACK, 290,140)
+# This represents scene 1 button sprite
+Button = Block(WHITE, 290,140)
 
-# Set a location for the target sprite
+# Set a location for the button sprite
 Button.rect.x = 305
 Button.rect.y = 290
 
-# Add the target sprite to the list of objects
+# Add the button sprite to the list of objects
 all_sprites_list.add(Button)
 scene_list.add(Button)
 
@@ -170,13 +170,10 @@ while running:
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
                     target_list.add(newTarget)
-            for target in scene_list:
-                if (target.rect.collidepoint(mouse_x, mouse_y)):
+            for sprite in scene_list:
+                if (sprite.rect.collidepoint(mouse_x, mouse_y)):
                     if scene == 1:
                         scene = 2
-                        
-                    elif scene == 3:
-                        scene = 1
                     else:
                         scene = 1
 
@@ -197,7 +194,7 @@ while running:
 
 
     elif scene == 2:
-        Button.kill()
+        scene_list.remove(Button)
         # update screen (do this last)
         screen.fill(WHITE)
 
@@ -222,6 +219,7 @@ while running:
             game_time = stopwatch
             stopwatch = 0
             scene = 3
+            scene_list.add(Button)
         
         # draw timers and scores
         my_font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -231,7 +229,8 @@ while running:
 
     elif scene == 3:
         screen.fill(BLACK)
-        
+
+        scene_list.draw(screen)
 
 
     pygame.display.flip()
