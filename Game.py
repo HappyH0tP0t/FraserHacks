@@ -34,33 +34,54 @@ class Block(pygame.sprite.Sprite):
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
 
-        #
-
 
 ##Main
 
-
 #Variables
+#List
 all_sprites_list = pygame.sprite.Group()
+target_list = pygame.sprite.Group()
+scene_list = pygame.sprite.Group()
 
+#Mouse position
 last_frame_mouse_x, last_frame_mouse_y = pygame.mouse.get_pos()
 mouse_x, mouse_y = pygame.mouse.get_pos()
 last_frame_time = time.time()
 
+#what the operator
 operator = ["+","-","*","/"]
+
+#scene number
+scene = 1
 
 #Colors
 RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0,0,255)
+WHITE = (255,255,255)
+BLACK = (0,0,0)
 
-## Text
+# Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
+#images
+
+
+# This represents a button sprite
+Button = Block(BLACK, 50,50, operator[random.randint(0,3)], random.randint(1,5))
+
+# Set a location for the target sprite
+Button.rect.x = 0
+Button.rect.y = 0
+
+# Add the target sprite to the list of objects
+all_sprites_list.add(Button)
+scene_list.add(Button)
+
 #Target sprite set up
 for i in range(5):
-    # This represents a Bad sprite
+    # This represents a target sprite
     Target = Block(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
  
     # Set a random location for the target sprite
@@ -69,6 +90,7 @@ for i in range(5):
  
     # Add the target sprite to the list of objects
     all_sprites_list.add(Target)
+    target_list.add(Target)
 
 # Loop
 while running:
@@ -90,27 +112,42 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            for sprite in all_sprites_list:
+            for sprite in target_list:
                 if (sprite.rect.collidepoint((mouse_x, mouse_y))):
                     print(str(sprite.operatorType)+ str(sprite.operatorNumber))
                     sprite.kill()
+            for sprite in scene_list:
+                if (sprite.rect.collidepoint(mouse_x, mouse_y)):
+                    if scene == 1:
+                        scene = 2
+                        # sprite.update(color, BLACK)
+
+                    else:
+                        scene = 1
 
     all_sprites_list.update()
 
-    # update screen (do this last)  
-    screen.fill((255, 255, 255))
+    if scene == 1:
+        screen.fill(WHITE)
+        #pretty much just draws the targets rn
+        scene_list.draw(screen)
 
-    #pretty much just draws the targets rn
-    all_sprites_list.draw(screen)
 
-    #gives it the operations
-    for sprite in all_sprites_list:
-        my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        text_surface = my_font.render(sprite.operatorType + str(sprite.operatorNumber), False, (0, 0, 0))
-        screen.blit(text_surface, (sprite.rect.x, sprite.rect.y))
-    
-    # draw the mouse
-    pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
+    elif scene == 2:
+        # update screen (do this last)  
+        screen.fill(WHITE)
+
+        #pretty much just draws the targets rn
+        all_sprites_list.draw(screen)
+
+        #gives it the operations
+        for sprite in all_sprites_list:
+            my_font = pygame.font.SysFont('Comic Sans MS', 30)
+            text_surface = my_font.render(sprite.operatorType + str(sprite.operatorNumber), False, (0, 0, 0))
+            screen.blit(text_surface, (sprite.rect.x, sprite.rect.y))
+        
+        # draw the mouse
+        pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
 
     pygame.display.flip()
     clock.tick(60)
