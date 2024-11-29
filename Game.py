@@ -93,21 +93,14 @@ scene_list.add(Button)
 for i in range(5):
     # This represents a target sprite
     Target = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
-    target_x_values = []
-    target_y_values = []
 
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
     Target.rect.y = random.randint(100, 500)
-    for x in target_x_values:
-        if Target.rect.x == x:
-            while Target.rect.x == x:
-                Target.rect.x = random.randint(100, 800)
-    for y in target_y_values:
-        if Target.rect.y == y:
-            while Target.rect.y == y:
-                Target.rect.y = random.randint(100, 500)
-
+    for t in target_list:
+        if Target.rect.collidepoint((t.rect.x, t.rect.y)):
+            Target.rect.x = random.randint(100, 800)
+            Target.rect.y = random.randint(100, 500)
 
     # Add the target sprite to the list of objects
     all_sprites_list.add(Target)
@@ -142,12 +135,19 @@ while running:
                     if target.operatorType == "/":
                         currentNumber /= target.operatorNumber
                         currentNumber = int(currentNumber)
+                    #REMOVING OLD TARGET
                     target.kill()
-                    newTarget = BaseTarget(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
+
+                    #CREATING NEW TARGET    
+                    newTarget = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
                     # Set a random location for the target sprite
                     newTarget.rect.x = random.randint(100, 800)
                     newTarget.rect.y = random.randint(100, 500)
-                
+                    for t in target_list:
+                        if Target.rect.collidepoint((t.rect.x, t.rect.y)):
+                            Target.rect.x = random.randint(100, 800)
+                            Target.rect.y = random.randint(100, 500)
+                        
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
                     target_list.add(newTarget)
