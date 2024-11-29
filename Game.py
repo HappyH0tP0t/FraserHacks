@@ -108,15 +108,15 @@ scene_list.add(Button)
 #Target sprite set up
 for i in range(5):
     # This represents a target sprite
-    Target = BaseTarget(WHITE, 80, 80, operator[random.randint(0,3)], random.randint(1,5))
+    Target = BaseTarget(WHITE, 75, 75, operator[random.randint(0,3)], random.randint(1,5))
 
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
-    Target.rect.y = random.randint(100, 500)
+    Target.rect.y = random.randint(100, 450)
     for t in target_list:
         if Target.rect.collidepoint((t.rect.x, t.rect.y)):
             Target.rect.x = random.randint(100, 800)
-            Target.rect.y = random.randint(100, 500)
+            Target.rect.y = random.randint(100, 450)
 
     # Add the target sprite to the list of objects
     all_sprites_list.add(Target)
@@ -156,16 +156,16 @@ while running:
                     target.kill()
 
                     #CREATING NEW TARGET    
-                    newTarget = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
+                    newTarget = BaseTarget(WHITE, 75, 75, operator[random.randint(0,3)], random.randint(1,5))
                     
                     # Set a random location for the target sprite
                     newTarget.rect.x = random.randint(100, 800)
-                    newTarget.rect.y = random.randint(100, 500)
+                    newTarget.rect.y = random.randint(100, 450)
                     for sprite in target_list:
                         if pygame.sprite.collide_rect(sprite, newTarget):
                             print("HEY")
                             newTarget.rect.x = random.randint(100, 800)
-                            newTarget.rect.y = random.randint(100, 500)
+                            newTarget.rect.y = random.randint(100, 450)
                     newTarget = getBiasedTarget(current_number, goal_number)
                     
                     # Add the target sprite to the list of objects
