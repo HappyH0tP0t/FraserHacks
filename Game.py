@@ -62,8 +62,14 @@ def getBiasedTarget(current, goal):
 
 ##Main
 
-#Variables
+#Colors
+RED = (255,0,0)
+GREEN = (0,255,0)
+BLUE = (0,0,255)
+WHITE = (255,255,255)
+BLACK = (0,0,0)
 
+#Variables
 
 #List
 all_sprites_list = pygame.sprite.Group()
@@ -81,13 +87,6 @@ operator = ["+","-","*","/"]
 
 #scene number
 scene = 1
-
-#Colors
-RED = (255,0,0)
-GREEN = (0,255,0)
-BLUE = (0,0,255)
-WHITE = (255,255,255)
-BLACK = (0,0,0)
 
 # Text
 my_font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -206,7 +205,7 @@ while running:
 
         #hack button which allows you to instally get to the goal number                
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RCTRL:
+            if event.key == pygame.K_RCTRL and scene == 2:
                 current_number = goal_number
 
     all_sprites_list.update()
