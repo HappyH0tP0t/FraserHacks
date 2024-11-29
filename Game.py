@@ -73,6 +73,11 @@ text_surface = my_font.render('Some Text', False, (0, 0, 0))
 intro_page = pygame.image.load('Start-screen-image.jpg')
 intro_page = intro_page.convert()
 
+# counters
+goalNumber = random.randint(0, 100)
+currentNumber = random.randint(0, 100)
+stopwatch = 0
+
 # This represents a button sprite
 Button = Block(BLACK, 50,50)
 
@@ -108,21 +113,35 @@ while running:
     mouse_x, mouse_y = pygame.mouse.get_pos()
     mouse_delta_x, mouse_delta_y = mouse_x - last_frame_mouse_x, mouse_y - last_frame_mouse_y
     last_frame_mouse_x, last_frame_mouse_y = mouse_x, mouse_y
-    
-    # debbug
-    # print(deltaTime)
 
     # keep an eye out for quitting
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-            for sprite in target_list:
-                if (sprite.rect.collidepoint((mouse_x, mouse_y))):
-                    print(str(sprite.operatorType)+ str(sprite.operatorNumber))
-                    sprite.kill()
-            for sprite in scene_list:
-                if (sprite.rect.collidepoint(mouse_x, mouse_y)):
+            for target in target_list:
+                if (target.rect.collidepoint((mouse_x, mouse_y))):
+                    print(str(target.operatorType)+ str(target.operatorNumber))
+                    if target.operatorType == "+":
+                        currentNumber += target.operatorNumber
+                    if target.operatorType == "-":
+                        currentNumber -= target.operatorNumber
+                    if target.operatorType == "*":
+                        currentNumber *= target.operatorNumber
+                    if target.operatorType == "/":
+                        currentNumber /= target.operatorNumber
+                        currentNumber = int(currentNumber)
+                    target.kill()
+                    newTarget = BaseTarget(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
+                    # Set a random location for the target sprite
+                    newTarget.rect.x = random.randint(100, 800)
+                    newTarget.rect.y = random.randint(100, 500)
+                
+                    # Add the target sprite to the list of objects
+                    all_sprites_list.add(newTarget)
+                    target_list.add(newTarget)
+            for target in scene_list:
+                if (target.rect.collidepoint(mouse_x, mouse_y)):
                     if scene == 1:
                         scene = 2
                         # sprite.update(color, BLACK)
@@ -143,7 +162,7 @@ while running:
 
 
     elif scene == 2:
-        # update screen (do this last)  
+        # update screen (do this last)
         screen.fill(WHITE)
 
         #pretty much just draws the targets rn
@@ -157,6 +176,20 @@ while running:
         
         # draw the mouse
         pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
+
+        # Increase the timer and check for wins
+        stopwatch += delta_time
+        if currentNumber == goalNumber:
+            currentNumber = random.randint(0, 100)
+            goalNumber = random.randint(0, 100)
+            stopwatch = 0
+            print("lol you won")
+        
+        # draw timers and scores
+        my_font = pygame.font.SysFont('Comic Sans MS', 30)
+        screen.blit(my_font.render("time: " + str(stopwatch), False, (0, 0, 0)), (0, 0))
+        screen.blit(my_font.render("current number: " + str(currentNumber), False, (0, 0, 0)), (0, 30))
+        screen.blit(my_font.render("goal number: " + str(goalNumber), False, (0, 0, 0)), (0, 60))
 
     pygame.display.flip()
     clock.tick(60)
