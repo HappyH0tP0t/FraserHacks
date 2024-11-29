@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+import math
 
 #Set up
 pygame.init()
@@ -38,6 +39,21 @@ class BaseTarget(Block):
 
         self.operatorType = operatorType
         self.operatorNumber = operatorNumber
+
+# functions
+def getBiasedTarget(current, goal):
+    operators = ["+","-","*","/"]
+    direction = math.copysign(1, goal - current)
+    if direction > 0:
+        operators += ["+", "+", "+", "*", "*", "*"]
+    else:
+        operators += ["-", "-", "-", "/", "/", "/"]
+    newTarget = BaseTarget(RED, 25,25, operators[random.randint(0,3)], random.randint(1,5))
+    # Set a random location for the target sprite
+    newTarget.rect.x = random.randint(100, 800)
+    newTarget.rect.y = random.randint(100, 500)
+    return newTarget
+    
 
 ##Main
 
@@ -92,12 +108,23 @@ scene_list.add(Button)
 #Target sprite set up
 for i in range(5):
     # This represents a target sprite
-    Target = BaseTarget(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
- 
+    Target = BaseTarget(RED, 40, 40, operator[random.randint(0,3)], random.randint(1,5))
+    target_x_values = []
+    target_y_values = []
+
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
     Target.rect.y = random.randint(100, 500)
- 
+    for x in target_x_values:
+        if Target.rect.x == x:
+            while Target.rect.x == x:
+                Target.rect.x = random.randint(100, 800)
+    for y in target_y_values:
+        if Target.rect.y == y:
+            while Target.rect.y == y:
+                Target.rect.y = random.randint(100, 500)
+
+
     # Add the target sprite to the list of objects
     all_sprites_list.add(Target)
     target_list.add(Target)
@@ -132,11 +159,8 @@ while running:
                         currentNumber /= target.operatorNumber
                         currentNumber = int(currentNumber)
                     target.kill()
-                    newTarget = BaseTarget(RED, 25,25, operator[random.randint(0,3)], random.randint(1,5))
-                    # Set a random location for the target sprite
-                    newTarget.rect.x = random.randint(100, 800)
-                    newTarget.rect.y = random.randint(100, 500)
-                
+                    
+                    newTarget = getBiasedTarget(currentNumber, goalNumber)
                     # Add the target sprite to the list of objects
                     all_sprites_list.add(newTarget)
                     target_list.add(newTarget)
@@ -169,11 +193,11 @@ while running:
         all_sprites_list.draw(screen)
 
         #gives it the operations
-        for sprite in target_list:
+        for target in target_list:
             my_font = pygame.font.SysFont('Comic Sans MS', 30)
-            text_surface = my_font.render(sprite.operatorType + str(sprite.operatorNumber), False, (0, 0, 0))
-            screen.blit(text_surface, (sprite.rect.x, sprite.rect.y))
-        
+            text_surface = my_font.render(target.operatorType + str(target.operatorNumber), False, BLACK)
+            screen.blit(text_surface, (target.rect.x, target.rect.y))
+
         # draw the mouse
         pygame.draw.circle(screen, RED, (mouse_x, mouse_y), 10)
 
