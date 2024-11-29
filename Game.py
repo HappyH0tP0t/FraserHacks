@@ -20,6 +20,8 @@ class Block(pygame.sprite.Sprite):
         # Create an image of the block, and fill it with a color.
         self.image = pygame.Surface([width,height])
         self.image.fill(color)
+
+
  
         # Fetch the rectangle object that has the dimensions of the image
         # image.
@@ -77,7 +79,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for sprite in all_sprites_list:
+                if (sprite.rect.collidepoint((mouse_x, mouse_y))):
+                    sprite.kill()
     # update screen (do this last)     
     screen.fill((255, 255, 255))
 
