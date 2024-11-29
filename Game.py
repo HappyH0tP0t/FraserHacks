@@ -52,7 +52,7 @@ def getBiasedTarget(current, goal):
         operators += ["+", "+", "+", "*", "*", "*"]
     else:
         operators += ["-", "-", "-", "/", "/", "/"]
-    newTarget = BaseTarget(WHITE, 75, 75, operators[random.randint(0,len(operators) - 1)], random.randint(1,5))
+    newTarget = BaseTarget(WHITE, target_hitbox_length, target_hitbox_length, operators[random.randint(0,len(operators) - 1)], random.randint(1,5))
 
     # Set a random location for the target sprite
     newTarget.rect.x = random.randint(100, 800)
@@ -81,6 +81,7 @@ play_button_y = 280
 play_button_width = 290
 play_button_length = 140
 
+target_hitbox_length = 75
 
 #List
 all_sprites_list = pygame.sprite.Group()
@@ -148,7 +149,7 @@ difficulty_list.add(DifficultyButton)
 #Target sprite set up
 for i in range(5):
     # This represents a target sprite
-    Target = BaseTarget(WHITE, 75, 75, operator[random.randint(0,3)], random.randint(1,5))
+    Target = BaseTarget(WHITE, target_hitbox_length, target_hitbox_length, operator[random.randint(0,3)], random.randint(1,5))
 
     # Set a random location for the target sprite
     Target.rect.x = random.randint(100, 800)
