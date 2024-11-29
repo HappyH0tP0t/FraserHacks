@@ -79,11 +79,11 @@ currentNumber = random.randint(0, 100)
 stopwatch = 0
 
 # This represents a button sprite
-Button = Block(BLACK, 50,50)
+Button = Block(BLACK, 290,140)
 
 # Set a location for the target sprite
-Button.rect.x = 0
-Button.rect.y = 0
+Button.rect.x = 305
+Button.rect.y = 290
 
 # Add the target sprite to the list of objects
 all_sprites_list.add(Button)
@@ -154,14 +154,14 @@ while running:
     if scene == 1:
         screen.fill(WHITE)
 
-        #summons the starting image
-        screen.blit(intro_page, (0,0))
         #pretty much just draws the targets rn
         scene_list.draw(screen)
-        
+        #summons the starting image
+        screen.blit(intro_page, (0,0))
 
 
     elif scene == 2:
+        Button.kill()
         # update screen (do this last)
         screen.fill(WHITE)
 
