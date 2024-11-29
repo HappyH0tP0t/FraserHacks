@@ -70,7 +70,8 @@ my_font = pygame.font.SysFont('Comic Sans MS', 30)
 text_surface = my_font.render('Some Text', False, (0, 0, 0))
 
 #images
-
+intro_page = pygame.image.load('Start-screen-image.jpg')
+intro_page = intro_page.convert()
 
 # This represents a button sprite
 Button = Block(BLACK, 50,50)
@@ -133,8 +134,12 @@ while running:
 
     if scene == 1:
         screen.fill(WHITE)
+
+        #summons the starting image
+        screen.blit(intro_page, (0,0))
         #pretty much just draws the targets rn
         scene_list.draw(screen)
+        
 
 
     elif scene == 2:
